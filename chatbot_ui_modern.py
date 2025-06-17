@@ -77,7 +77,6 @@ with st.sidebar:
     st.header("Upload your PDF")
     if st.session_state.get('pdf_ready', False):
         st.success(f"Current PDF: {st.session_state['pdf_name']}")
-        st.info("To upload a new file, click the button below. You will not be able to chat with the current file anymore.")
         if st.button("Upload New PDF", type="primary"):
             clear_all_data()
             st.rerun()
@@ -98,6 +97,10 @@ with st.sidebar:
                 ingest_pdf(file_path, embeddings)
                 st.session_state['pdf_name'] = uploaded_file.name
                 st.session_state.pdf_ready = True
+                # Set a flag if this is not the first upload
+                if st.session_state.get('has_uploaded_before', False):
+                    st.session_state['just_uploaded_new_file'] = True
+                st.session_state['has_uploaded_before'] = True
             st.rerun()
 
 st.title("PDF Chatbot 🗨️")
@@ -107,6 +110,11 @@ st.markdown("""
 Ask questions and get instant answers based only on your document.\
  Have fun exploring your PDFs!
 """)
+
+# Show friendly message only after the second (or more) upload
+if st.session_state.get('just_uploaded_new_file', False):
+    st.info("New PDF uploaded! Start chatting below.")
+    st.session_state['just_uploaded_new_file'] = False
 
 if st.session_state.get('pdf_ready', False) and st.session_state['vector_store'] is not None:
     embeddings, llm = get_models()
