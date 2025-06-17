@@ -74,6 +74,7 @@ if 'vector_store' not in st.session_state:
     st.session_state['vector_store'] = None
 
 with st.sidebar:
+    st.markdown("<div style='height: 1em'></div>", unsafe_allow_html=True)
     st.header("Upload your PDF")
     st.info("Only one PDF at a time. Uploading a new one replaces the old.")
     if st.session_state.get('pdf_ready', False):
@@ -104,7 +105,10 @@ with st.sidebar:
                 st.session_state['has_uploaded_before'] = True
             st.rerun()
 
-st.title("PDF Chatbot 🗨️")
+# Center the main title using markdown and HTML
+st.markdown("""
+<div style='text-align: center; font-size: 2.7em; font-weight: bold; margin-bottom: 0.2em;'>PDF Chatbot 🗨️</div>
+""", unsafe_allow_html=True)
 st.markdown("""
 **Upload a PDF and chat with it!**
 
