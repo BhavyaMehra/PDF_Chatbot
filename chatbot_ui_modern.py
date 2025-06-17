@@ -75,6 +75,7 @@ if 'vector_store' not in st.session_state:
 
 with st.sidebar:
     st.header("Upload your PDF")
+    st.info("Only one PDF at a time. Uploading a new one replaces the old.")
     if st.session_state.get('pdf_ready', False):
         st.success(f"Current PDF: {st.session_state['pdf_name']}")
         if st.button("Upload New PDF", type="primary"):
