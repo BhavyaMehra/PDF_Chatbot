@@ -5,3 +5,4 @@ langchain_core
 faiss-cpu
 pypdf
 sentence-transformers
+openai
