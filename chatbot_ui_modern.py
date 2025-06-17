@@ -73,10 +73,15 @@ if 'pdf_ready' not in st.session_state:
 if 'vector_store' not in st.session_state:
     st.session_state['vector_store'] = None
 
-with st.sidebar:
-    st.markdown("<div style='height: 1em'></div>", unsafe_allow_html=True)
-    st.header("Upload your PDF")
-    st.info("Only one PDF at a time. Uploading a new one replaces the old.")
+# Center the main title using markdown and HTML (move to very top)
+st.markdown("""
+<div style='text-align: center; font-size: 2.7em; font-weight: bold; margin-bottom: 0.2em;'>PDF Chatbot 🗨️</div>
+""", unsafe_allow_html=True)
+
+# --- PDF Upload Controls (now just below the header, for mobile/web friendliness) ---
+with st.container():
+    st.markdown("<div style='height: 0.5em'></div>", unsafe_allow_html=True)
+    st.info("Upload a PDF to chat with. Only one at a time!")
     if st.session_state.get('pdf_ready', False):
         st.success(f"Current PDF: {st.session_state['pdf_name']}")
         if st.button("Upload New PDF", type="primary"):
@@ -105,13 +110,7 @@ with st.sidebar:
                 st.session_state['has_uploaded_before'] = True
             st.rerun()
 
-# Center the main title using markdown and HTML
 st.markdown("""
-<div style='text-align: center; font-size: 2.7em; font-weight: bold; margin-bottom: 0.2em;'>PDF Chatbot 🗨️</div>
-""", unsafe_allow_html=True)
-st.markdown("""
-**Upload a PDF and chat with it!**
-
 Ask questions and get instant answers based only on your document.\
  Have fun exploring your PDFs!
 """)
