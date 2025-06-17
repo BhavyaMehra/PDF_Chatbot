@@ -136,5 +136,3 @@ if st.session_state.get('pdf_ready', False) and st.session_state['vector_store']
                 answer = response['answer']
             st.session_state.conversation.append({'user': user_question, 'assistant': answer})
             st.rerun()
-else:
-    st.info("Please upload a PDF to start chatting.")

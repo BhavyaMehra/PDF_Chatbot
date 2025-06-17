@@ -1,0 +1,9 @@
+[theme]
+primaryColor = "#4F8BF9"
+backgroundColor = "#F7F9FB"
+secondaryBackgroundColor = "#E3EAF2"
+textColor = "#22223B"
+font = "sans serif"
+
+# Optional: You can add more theme options as needed
+# For more, see https://docs.streamlit.io/library/advanced-features/theming
