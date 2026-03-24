@@ -73,11 +73,17 @@ if 'pdf_ready' not in st.session_state:
 if 'vector_store' not in st.session_state:
     st.session_state['vector_store'] = None
 
-with st.sidebar:
-    st.header("Upload your PDF")
+# Center the main title using markdown and HTML (move to very top)
+st.markdown("""
+<div style='text-align: center; font-size: 2.7em; font-weight: bold; margin-bottom: 0.2em;'>PDF Chatbot 🗨️</div>
+""", unsafe_allow_html=True)
+
+# --- PDF Upload Controls (now just below the header, for mobile/web friendliness) ---
+with st.container():
+    st.markdown("<div style='height: 0.5em'></div>", unsafe_allow_html=True)
+    st.info("Upload a PDF to chat with. Only one at a time!")
     if st.session_state.get('pdf_ready', False):
         st.success(f"Current PDF: {st.session_state['pdf_name']}")
-        st.info("To upload a new file, click the button below. You will not be able to chat with the current file anymore.")
         if st.button("Upload New PDF", type="primary"):
             clear_all_data()
             st.rerun()
@@ -98,15 +104,21 @@ with st.sidebar:
                 ingest_pdf(file_path, embeddings)
                 st.session_state['pdf_name'] = uploaded_file.name
                 st.session_state.pdf_ready = True
+                # Set a flag if this is not the first upload
+                if st.session_state.get('has_uploaded_before', False):
+                    st.session_state['just_uploaded_new_file'] = True
+                st.session_state['has_uploaded_before'] = True
             st.rerun()
 
-st.title("PDF Chatbot 🗨️")
 st.markdown("""
-**Upload a PDF and chat with it!**
-
 Ask questions and get instant answers based only on your document.\
  Have fun exploring your PDFs!
 """)
+
+# Show friendly message only after the second (or more) upload
+if st.session_state.get('just_uploaded_new_file', False):
+    st.info("New PDF uploaded! Start chatting below.")
+    st.session_state['just_uploaded_new_file'] = False
 
 if st.session_state.get('pdf_ready', False) and st.session_state['vector_store'] is not None:
     embeddings, llm = get_models()
@@ -124,5 +136,3 @@ if st.session_state.get('pdf_ready', False) and st.session_state['vector_store']
                 answer = response['answer']
             st.session_state.conversation.append({'user': user_question, 'assistant': answer})
             st.rerun()
-else:
-    st.info("Please upload a PDF to start chatting.")
