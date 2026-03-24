@@ -1,5 +1,5 @@
 # models.py
-from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain_community.embeddings import HuggingFaceEmbeddings
 import os
 import streamlit as st
