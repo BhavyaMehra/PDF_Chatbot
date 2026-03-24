@@ -11,5 +11,5 @@ class Models:
     def __init__(self):
         self.embeddings = HuggingFaceEmbeddings(model_name='all-MiniLM-L6-v2')
 
-        self.model = ChatOpenAI(model_name='deepseek/deepseek-r1:free', 
+        self.model = ChatOpenAI(model_name='nvidia/nemotron-nano-12b-v2-vl:free', 
                                 temperature=0)
