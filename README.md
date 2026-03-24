@@ -38,4 +38,3 @@ streamlit run chatbot_ui_modern.py
 
 - Only one PDF can be loaded at a time
 - Responses are constrained to document context to reduce hallucination
-- The data/ folder is gitignored and not included in the repo
